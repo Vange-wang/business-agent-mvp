@@ -10,6 +10,12 @@
 Code文档/prototypes/customer-service-agent-mvp
 ```
 
+商业演示页位于：
+
+```text
+Code文档/prototypes/customer-service-demo/index.html
+```
+
 能力范围：
 
 - 基于通用售前客服知识库回答业务智能体咨询。
@@ -17,6 +23,23 @@ Code文档/prototypes/customer-service-agent-mvp
 - 收集客户称呼、联系方式、行业和需求。
 - 对投诉、合同、退款、法律、赔偿等高风险问题转人工。
 - 提供本地网页演示和 `/api/chat` 接口。
+
+真实 Dify Cloud 版本：
+
+- 应用名称：`智能客服业务智能体 MVP - 知识库版`
+- 应用页面：`https://cloud.dify.ai/app/ae0d0725-c989-4e0c-b8ab-941e8deefccd/workflow`
+- 工作流：`Start -> Knowledge Retrieval -> LLM -> Answer`
+- 主模型：`deepseek-v4-flash`
+
+## 商业化交付包
+
+首版可复制交付资产位于：
+
+```text
+交付文档/智能客服业务智能体交付包v1
+```
+
+该目录包含售前一页纸、客户需求采集表、知识库整理模板、交付 SOP、报价模板、验收清单、运维维护手册和 Dify API 接入实施方案。
 
 ## 运行
 
