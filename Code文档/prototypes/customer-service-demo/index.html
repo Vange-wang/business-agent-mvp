@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>智能客服业务智能体 Demo</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, "Microsoft YaHei", sans-serif;
+        background: #f5f7fb;
+        color: #182033;
+      }
+      main {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(280px, 420px) minmax(320px, 1fr);
+        gap: 24px;
+        padding: 32px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #dce3ef;
+        border-radius: 8px;
+        box-shadow: 0 12px 32px rgba(24, 32, 51, 0.08);
+      }
+      .intro { padding: 28px; }
+      h1 { margin: 0 0 12px; font-size: 28px; }
+      h2 { margin: 24px 0 10px; font-size: 16px; }
+      p, li { line-height: 1.7; }
+      ul { padding-left: 20px; }
+      .chat {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        min-height: calc(100vh - 64px);
+      }
+      .chat-header {
+        padding: 18px 20px;
+        border-bottom: 1px solid #dce3ef;
+      }
+      .chat-header strong { display: block; font-size: 18px; }
+      .chat-header span { color: #62708a; font-size: 13px; }
+      .messages {
+        padding: 20px;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .msg {
+        max-width: 78%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+      .bot { background: #eef4ff; align-self: flex-start; border: 1px solid #d5e4ff; }
+      .user { background: #143a5a; color: white; align-self: flex-end; }
+      .composer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 16px;
+        border-top: 1px solid #dce3ef;
+      }
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #b8c3d6;
+        border-radius: 6px;
+        font-size: 15px;
+      }
+      button {
+        padding: 0 18px;
+        border: 0;
+        border-radius: 6px;
+        background: #0f7b6c;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .chip {
+        padding: 8px 10px;
+        background: #eef4ff;
+        border: 1px solid #d5e4ff;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      @media (max-width: 760px) {
+        main { grid-template-columns: 1fr; padding: 16px; }
+        .chat { min-height: 620px; }
+        .msg { max-width: 92%; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="panel intro">
+        <h1>智能客服业务智能体</h1>
+        <p>这个本地原型用于在没有模型 Key 的情况下验证客服闭环：FAQ 问答、价格保守回复、预约线索收集、转人工兜底。</p>
+        <h2>可接管的重复工作</h2>
+        <ul>
+          <li>回答服务、价格、预约、售后等常见问题。</li>
+          <li>遇到预约/购买意向时收集线索。</li>
+          <li>遇到投诉、退款、合同、开票等问题转人工。</li>
+        </ul>
+        <h2>试试这些问题</h2>
+        <div class="chips" id="chips"></div>
+      </section>
+
+      <section class="panel chat">
+        <div class="chat-header">
+          <strong>本地生活服务智能客服</strong>
+          <span>演示版，不连接真实客户数据</span>
+        </div>
+        <div class="messages" id="messages"></div>
+        <form class="composer" id="form">
+          <input id="input" placeholder="输入问题，例如：深度清洁多少钱？" autocomplete="off" />
+          <button type="submit">发送</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./agent.js"></script>
+    <script>
+      const messages = document.getElementById("messages");
+      const input = document.getElementById("input");
+      const form = document.getElementById("form");
+      const chips = document.getElementById("chips");
+
+      const examples = [
+        "你们提供哪些服务？",
+        "深度清洁多少钱？",
+        "我想预约明天下午保洁",
+        "我要投诉",
+        "你们能修飞机吗？"
+      ];
+
+      function addMessage(text, type) {
+        const div = document.createElement("div");
+        div.className = `msg ${type}`;
+        div.textContent = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      examples.forEach((text) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chip";
+        button.textContent = text;
+        button.addEventListener("click", () => {
+          input.value = text;
+          form.requestSubmit();
+        });
+        chips.appendChild(button);
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        addMessage(text, "user");
+        input.value = "";
+        window.setTimeout(() => addMessage(window.CustomerServiceAgent.reply(text), "bot"), 250);
+      });
+
+      addMessage("你好，我是智能客服。你可以问服务、价格、预约、售后问题；如果问题需要人工，我会帮你记录需求。", "bot");
+    </script>
+  </body>
+</html>

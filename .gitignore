@@ -1,0 +1,29 @@
+# Local Codex/runtime state
+.codex/
+.agents/
+
+# Logs and temporary runtime output
+*.log
+Code文档/prototypes/**/server.out.log
+Code文档/prototypes/**/server.err.log
+
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

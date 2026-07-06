@@ -1,0 +1,63 @@
+{
+  "name": "智能客服业务智能体 MVP",
+  "platform": "Dify Chatflow",
+  "version": "0.1.0",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "inputs": ["user_question"]
+    },
+    {
+      "id": "intent_classifier",
+      "type": "question_classifier",
+      "classes": ["faq", "price", "appointment", "lead", "after_sales", "human", "unknown"]
+    },
+    {
+      "id": "knowledge_retrieval",
+      "type": "knowledge_retrieval",
+      "dataset": "智能客服业务智能体-样例知识库"
+    },
+    {
+      "id": "llm_answer",
+      "type": "llm",
+      "prompt_file": "system-prompt.md"
+    },
+    {
+      "id": "lead_capture",
+      "type": "structured_collection",
+      "fields": ["lead_name", "lead_contact", "lead_need_type", "lead_city", "lead_time", "note"]
+    },
+    {
+      "id": "human_handoff",
+      "type": "answer",
+      "text": "这个问题需要人工进一步确认。我可以先帮你记录需求，请留下称呼、联系方式和方便联系的时间，工作人员会尽快跟进。"
+    }
+  ],
+  "routing": [
+    {
+      "from": "start",
+      "to": "intent_classifier"
+    },
+    {
+      "from": "intent_classifier",
+      "when": ["faq", "price", "appointment", "after_sales"],
+      "to": "knowledge_retrieval"
+    },
+    {
+      "from": "knowledge_retrieval",
+      "to": "llm_answer"
+    },
+    {
+      "from": "intent_classifier",
+      "when": ["lead"],
+      "to": "lead_capture"
+    },
+    {
+      "from": "intent_classifier",
+      "when": ["human", "unknown"],
+      "to": "human_handoff"
+    }
+  ]
+}
+

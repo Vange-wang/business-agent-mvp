@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>智能客服业务智能体 MVP</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="workspace">
+      <aside class="brief">
+        <div class="status">
+          <span></span>
+          本地 MVP
+        </div>
+        <h1>智能客服业务智能体</h1>
+        <p class="summary">
+          面向“售卖业务智能体/人工客服替代与协同”的首版客服 Agent。它基于通用知识库回答客户咨询，能识别报价、数据安全、购买意向和转人工场景。
+        </p>
+
+        <section>
+          <h2>可演示能力</h2>
+          <ul>
+            <li>根据知识库回答业务智能体售前咨询</li>
+            <li>对价格和合同类问题保持保守边界</li>
+            <li>收集称呼、联系方式、行业和需求</li>
+            <li>识别投诉、退款、法律、赔偿等转人工场景</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>试问</h2>
+          <div class="quick-actions" id="quickActions"></div>
+        </section>
+      </aside>
+
+      <section class="chat-shell" aria-label="智能客服聊天窗口">
+        <header class="chat-header">
+          <div>
+            <strong>AI 客服顾问</strong>
+            <span>知识库检索 + 业务规则 + 线索收集</span>
+          </div>
+          <button class="ghost-button" id="resetButton" type="button">重置会话</button>
+        </header>
+
+        <div class="messages" id="messages"></div>
+
+        <form class="composer" id="chatForm">
+          <input
+            id="messageInput"
+            name="message"
+            placeholder="输入问题，例如：你们和普通聊天机器人有什么区别？"
+            autocomplete="off"
+          />
+          <button type="submit">发送</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
