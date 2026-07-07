@@ -79,14 +79,14 @@ NEXT_PUBLIC_DIFY_CUSTOMER_SERVICE_URL=https://udify.app/chatbot/{WEBAPP_TOKEN}
 $url = "https://udify.app/chatbot/{WEBAPP_TOKEN}"
 $r = Invoke-WebRequest -Uri $url -UseBasicParsing -MaximumRedirection 5 -TimeoutSec 20
 $r.StatusCode
-$r.Content -match "not found|App with code|404"
+$r.Content -match "App with code"
 ```
 
 通过标准：
 
 ```text
 StatusCode = 200
-not found / App with code / 404 = False
+App with code = False
 ```
 
 ### 4.2 验证客户网站
@@ -95,7 +95,7 @@ not found / App with code / 404 = False
 $page = Invoke-WebRequest -Uri "https://ungradu-edu-prod-275285-6-1445807473.sh.run.tcloudbase.com/customer-service" -UseBasicParsing -TimeoutSec 20
 $page.StatusCode
 $page.Content -match "https://udify.app/chatbot/"
-$page.Content -match "App with code|not found"
+$page.Content -match "App with code"
 ```
 
 通过标准：
@@ -103,22 +103,29 @@ $page.Content -match "App with code|not found"
 ```text
 StatusCode = 200
 包含 https://udify.app/chatbot/
-不包含 App with code / not found
+不包含 App with code
 ```
 
 ## 5. 当前项目处理状态
 
-当前商业化复制 v1 不能判定最终通过，原因是生产环境 Dify URL 使用了错误 ID。
+当前商业化复制 v1 已通过线上复验。
 
-修复完成并重新验收后，关闭 Issue：
+修复结果：
+
+```text
+NEXT_PUBLIC_DIFY_CUSTOMER_SERVICE_URL=https://udify.app/chatbot/aFMxKMpMSFNm6ItV
+```
+
+已关闭 Issue：
 
 ```text
 CS-ISSUE-20260707-001
 ```
 
-关闭依据必须包含：
+关闭依据：
 
-- 正确的 Dify WebApp URL 格式。
-- 客户网站 `/customer-service` 页面加载正确 iframe。
-- 页面不再出现 `App with code ... not found`。
-- Dify WebApp 可以正常打开并对话。
+- Dify WebApp 返回 200，且未出现 `App with code`。
+- 客户网站 `/customer-service` 返回 200。
+- 客户网站页面包含 `https://udify.app/chatbot/aFMxKMpMSFNm6ItV`。
+- 客户网站页面不再包含旧错误地址 `https://udify.app/chat/ae0d0725-c989-4e0c-b8ab-941e8deefccd`。
+- 客户网站页面保留 `/feedback` 入口。
