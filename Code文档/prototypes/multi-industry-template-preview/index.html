@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多行业客服智能体模板矩阵 - 交付战情面板</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d8e0eb;
+      --panel: #ffffff;
+      --panel-2: #eef4f8;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #16a34a;
+      --amber: #d97706;
+      --red: #dc2626;
+      --shadow: 0 18px 42px rgba(23, 32, 51, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(37, 99, 235, 0.08), transparent 330px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      font-weight: 800;
+      letter-spacing: 0;
+      box-shadow: var(--shadow);
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border: 1px solid rgba(22, 163, 74, 0.32);
+      border-radius: 8px;
+      color: #126336;
+      background: #eaf8ef;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .alert {
+      display: grid;
+      grid-template-columns: 6px 1fr;
+      overflow: hidden;
+      margin-bottom: 22px;
+      border: 1px solid #f4c56a;
+      border-radius: 8px;
+      background: #fff9e8;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.08);
+    }
+
+    .alert::before {
+      content: "";
+      background: var(--amber);
+    }
+
+    .alert-content {
+      padding: 14px 16px;
+    }
+
+    .alert strong {
+      color: #92400e;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .card-pad {
+      padding: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 15px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .brief {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .brief-item {
+      min-height: 132px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+    }
+
+    .brief-item h3 {
+      margin-bottom: 8px;
+    }
+
+    .brief-item p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress-row {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .progress-item {
+      display: grid;
+      grid-template-columns: 132px 1fr 52px;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe7f0;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .role-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .role {
+      padding: 15px;
+      border-left: 4px solid var(--blue);
+    }
+
+    .role:nth-child(2) { border-left-color: var(--cyan); }
+    .role:nth-child(3) { border-left-color: var(--green); }
+    .role:nth-child(4) { border-left-color: var(--amber); }
+    .role:nth-child(5) { border-left-color: #7c3aed; }
+    .role:nth-child(6) { border-left-color: var(--red); }
+
+    .role p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix th {
+      color: #344054;
+      background: #eef3f9;
+      font-size: 13px;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      margin: 2px 4px 2px 0;
+      padding: 4px 7px;
+      border-radius: 6px;
+      color: #344054;
+      background: #edf2f7;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.ok {
+      color: #126336;
+      background: #e8f7ef;
+    }
+
+    .tag.next {
+      color: #92400e;
+      background: #fff3d6;
+    }
+
+    .assets-next {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 16px;
+    }
+
+    .asset-list,
+    .next-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .asset-list li,
+    .next-list li {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .num {
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .next-list .num {
+      background: var(--amber);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid #c7d2fe;
+      border-radius: 8px;
+      color: #243b79;
+      background: #eef2ff;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .assets-next {
+        grid-template-columns: 1fr;
+      }
+
+      .brief,
+      .role-grid,
+      .legend {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brief,
+      .role-grid,
+      .legend {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-item {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .matrix {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">AI</div>
+        <div>
+          <h1>多行业客服智能体模板矩阵交付战情面板</h1>
+          <p class="subtitle">代码开发员 Agent 静态预览 · 2026-07-07 · 无构建依赖</p>
+        </div>
+      </div>
+      <div class="status-chip"><span class="status-dot"></span>测试集与蓝图已完成</div>
+    </header>
+
+    <section class="alert" aria-label="当前边界">
+      <div class="alert-content">
+        <strong>当前边界：</strong>
+        三行业 Dify 线上实装是下一步；当前完成的是模板矩阵、三行业 FAQ 测试集、Dify 实装配置蓝图、验收方案和可视化预览沉淀，不代表 3 个 Dify 线上样板应用已经发布。
+      </div>
+    </section>
+
+    <section class="grid hero-grid">
+      <div class="card card-pad">
+        <div class="section-title">
+          <h2>做了什么 / 为什么这么做 / 目前做到什么程度</h2>
+          <span class="small">面向内部交付总览</span>
+        </div>
+        <div class="brief">
+          <article class="brief-item">
+            <h3>做了什么</h3>
+            <p>把智能客服 MVP 和二客户复制试点沉淀为三行业模板矩阵：教育培训、家政清洁、本地门店，并补齐知识库结构、提示词边界、留资字段和验收问答方向。</p>
+          </article>
+          <article class="brief-item">
+            <h3>为什么这么做</h3>
+            <p>后续客户交付不能每次从零写需求、配置 Dify、整理 FAQ 和验收问题。先形成低风险行业模板，才能复制交付、控制边界、减少知识库污染。</p>
+          </article>
+          <article class="brief-item">
+            <h3>目前程度</h3>
+            <p>文档、模板、三行业 FAQ 测试集与配置蓝图已形成；商业化交付包已覆盖售前、交付清单、上线验收和售后维护。真实 Dify 应用复制、调试窗口跑测和线上发布尚未执行。</p>
+          </article>
+        </div>
+      </div>
+
+      <aside class="card card-pad">
+        <div class="section-title">
+          <h2>阶段进度</h2>
+          <span class="small">当前可交付状态</span>
+        </div>
+        <div class="progress-row">
+          <div class="progress-item">
+            <strong>模板矩阵</strong>
+            <div class="bar"><span style="width: 100%"></span></div>
+            <span>100%</span>
+          </div>
+          <div class="progress-item">
+            <strong>配置蓝图</strong>
+            <div class="bar"><span style="width: 100%"></span></div>
+            <span>100%</span>
+          </div>
+          <div class="progress-item">
+            <strong>验收方案</strong>
+            <div class="bar"><span style="width: 100%"></span></div>
+            <span>100%</span>
+          </div>
+          <div class="progress-item">
+            <strong>FAQ 测试集</strong>
+            <div class="bar"><span style="width: 100%"></span></div>
+            <span>90 条</span>
+          </div>
+          <div class="progress-item">
+            <strong>Dify 实装</strong>
+            <div class="bar"><span style="width: 34%"></span></div>
+            <span>下一步</span>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="metric"><b>3</b><span>首批行业模板</span></div>
+          <div class="metric"><b>90</b><span>FAQ 验收问题</span></div>
+          <div class="metric"><b>4</b><span>Dify 实装蓝图</span></div>
+          <div class="metric"><b>0</b><span>当前阻塞 Issue</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid role-grid" aria-label="负责人分工">
+      <article class="card card-pad role">
+        <h3>产品经理 Agent</h3>
+        <p>锁定三行业范围、客户准入、不做事项和验收口径，防止模板扩张成复杂 SaaS。</p>
+      </article>
+      <article class="card card-pad role">
+        <h3>学习研究 Agent</h3>
+        <p>补充行业真实问答、知识库模块、留资字段、转人工和禁答边界。</p>
+      </article>
+      <article class="card card-pad role">
+        <h3>技术验证 Agent</h3>
+        <p>确认 Dify 复制路径、RAG 检查、WebApp / embed / API 接入和回滚方案。</p>
+      </article>
+      <article class="card card-pad role">
+        <h3>Agent 搭建师 Agent</h3>
+        <p>沉淀 Dify 模板总览和三行业模板，下一步负责线上样板应用复制与配置。</p>
+      </article>
+      <article class="card card-pad role">
+        <h3>UI / 交付设计 Agent</h3>
+        <p>整理客户可读的演示话术、交付清单、上线验收表和售后维护 SOP。</p>
+      </article>
+      <article class="card card-pad role">
+        <h3>代码开发员 Agent</h3>
+        <p>本次仅提供静态可视化预览；后续在需要嵌入页、API 中转或自动化测试时介入。</p>
+      </article>
+    </section>
+
+    <section class="card card-pad">
+      <div class="section-title">
+        <h2>三行业矩阵</h2>
+        <span class="small">首批低风险模板范围</span>
+      </div>
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>行业模板</th>
+            <th>适用客户</th>
+            <th>首版重点</th>
+            <th>线索字段</th>
+            <th>高风险边界</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>教育培训客服</strong></td>
+            <td>家教平台、培训机构、课程咨询服务</td>
+            <td>课程咨询、试听预约、师资说明、报名流程</td>
+            <td>年级 / 年龄、课程方向、城市校区、联系方式</td>
+            <td>不承诺提分、录取、包过；退费、合同、最终报价转人工</td>
+            <td><span class="tag ok">模板完成</span><span class="tag ok">30 题测试集</span><span class="tag next">待 Dify 实装</span></td>
+          </tr>
+          <tr>
+            <td><strong>家政清洁客服</strong></td>
+            <td>保洁、开荒、家电清洗、到家服务团队</td>
+            <td>服务项目、价格影响因素、上门预约、售后处理</td>
+            <td>服务类型、地址区域、房屋面积、期望时间、联系方式</td>
+            <td>不承诺最终报价、退款赔偿、危险作业和服务纠纷结论</td>
+            <td><span class="tag ok">模板完成</span><span class="tag ok">30 题测试集</span><span class="tag next">待 Dify 实装</span></td>
+          </tr>
+          <tr>
+            <td><strong>本地门店客服</strong></td>
+            <td>餐饮、零售、宠物、维修、社区服务门店</td>
+            <td>营业信息、到店预约、活动咨询、售后转人工</td>
+            <td>门店 / 区域、服务或商品、到店时间、人数、联系方式</td>
+            <td>不承诺实时库存、档期、技师、优惠、退款和客诉处理结果</td>
+            <td><span class="tag ok">模板完成</span><span class="tag ok">30 题测试集</span><span class="tag next">待 Dify 实装</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid assets-next">
+      <div class="card card-pad">
+        <div class="section-title">
+          <h2>交付资产</h2>
+          <span class="small">已经沉淀的可复用材料</span>
+        </div>
+        <ul class="asset-list">
+          <li><span class="num">1</span><span>多行业模板矩阵 Spec：阶段目标、客户范围、验收标准和不做事项。</span></li>
+          <li><span class="num">2</span><span>三行业 Dify 模板：知识库结构、系统提示词、开场白、建议问题和留资字段。</span></li>
+          <li><span class="num">3</span><span>技术验证蓝图：Dify 复制路径、RAG 检查、三种接入方式和回滚方案。</span></li>
+          <li><span class="num">4</span><span>商业化复制包：客户演示话术、交付清单、上线验收表和售后维护 SOP。</span></li>
+          <li><span class="num">5</span><span>三行业 FAQ 测试集：教育培训、家政清洁、本地门店各 30 条，覆盖 FAQ、价格、预约、售后、未知和高风险边界。</span></li>
+          <li><span class="num">6</span><span>静态可视化预览：把当前交付范围、进度、分工和下一步做成可打开页面。</span></li>
+        </ul>
+      </div>
+
+      <div class="card card-pad">
+        <div class="section-title">
+          <h2>下一步</h2>
+          <span class="small">从沉淀进入线上样板</span>
+        </div>
+        <ol class="next-list">
+          <li><span class="num">1</span><span>Agent 搭建师在 Dify 中复制或创建 3 个行业样板应用，替换 Knowledge、应用名称、欢迎语和提示词。</span></li>
+          <li><span class="num">2</span><span>技术验证 Agent 使用 90 条固定测试集验证 FAQ、同义改写、流程追问、线索收集和风险转人工。</span></li>
+          <li><span class="num">3</span><span>UI / 交付设计 Agent 将可视化页与套餐包整理为客户可读演示材料。</span></li>
+          <li><span class="num">4</span><span>代码开发员 Agent 仅在需要嵌入页、API 中转、Webhook 或自动化测试时继续开发。</span></li>
+          <li><span class="num">5</span><span>ISSUE 管理员在真实 Dify 实装阶段只登记实际阻塞和验收缺陷。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      交付口径：客户购买的是基于客户业务资料搭建、可嵌入真实业务入口、能处理重复咨询和线索收集的客服智能体交付结果；不是 Dify / Coze 平台本身，也不是内部 Codex 协作角色。
+    </p>
+  </main>
+</body>
+</html>

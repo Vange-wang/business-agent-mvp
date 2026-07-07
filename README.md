@@ -67,6 +67,34 @@ Agent研究文档/Dify模板/多行业客服模板矩阵
 
 本阶段首批沉淀教育培训、家政清洁、本地门店 3 个低风险客服模板，并形成 Spec、研究、技术验证、Dify 模板、客户交付包和阶段验收报告。
 
+## 三行业实装准备与可视化预览
+
+三行业 FAQ 测试集位于：
+
+```text
+Agent研究文档/行业模板矩阵/FAQ测试集
+```
+
+三行业 Dify 实装配置蓝图位于：
+
+```text
+Agent研究文档/Dify模板/三行业实装验收
+```
+
+可视化预览页位于：
+
+```text
+Code文档/prototypes/multi-industry-template-preview/index.html
+```
+
+可视化截图位于：
+
+```text
+Code文档/prototypes/multi-industry-template-preview/preview.png
+```
+
+本阶段已完成教育培训、家政清洁、本地门店各 30 条 FAQ / 验收问题，并形成 Dify 实装配置蓝图和静态交付战情面板；真实 Dify 三行业线上样板应用仍属于下一阶段。
+
 ## 运行
 
 ```powershell
