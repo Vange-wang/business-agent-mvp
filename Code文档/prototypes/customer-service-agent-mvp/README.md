@@ -1,6 +1,6 @@
 # 智能客服业务智能体 MVP
 
-本目录是首个可运行的“可售卖业务智能体 Agent”本地 MVP。它使用 `Agent研究文档/Dify模板/智能客服业务智能体/knowledge-base-ai-agent-service-sales.md` 作为知识库，完成售前客服问答、报价边界、数据安全解释、线索收集和转人工判断。
+本目录是首个可运行的“可售卖业务智能体 Agent”本地 MVP。它默认使用 `Agent研究文档/Dify模板/智能客服业务智能体/knowledge-base-ai-agent-service-sales.md` 作为知识库，完成售前客服问答、报价边界、数据安全解释、线索收集和转人工判断；同时通过 `knowledge-base-home-cleaning-pilot.md` 验证第二客户家政清洁场景的复制能力。
 
 ## 目录说明
 
@@ -8,6 +8,7 @@
 - `server.js`：本地 HTTP 服务，提供网页演示和 `/api/chat` 接口。
 - `public/`：可直接给客户演示的网页聊天界面。
 - `agent-core.test.js`：核心 Agent 行为测试。
+- `second-customer-pilot.test.js`：第二客户家政清洁复制试点测试。
 - `server.test.js`：HTTP API 与会话状态测试。
 
 ## 运行方式
@@ -44,8 +45,11 @@ node --test $tests
 当前验收覆盖：
 
 - 加载通用售前客服知识库。
+- 加载第二客户家政清洁知识库。
 - 回答“和普通聊天机器人有什么区别”。
 - 保守处理价格与最终报价。
+- 回答家政清洁服务范围和价格边界。
+- 识别家政清洁预约线索。
 - 对转人工、投诉、合同、法律、赔偿等问题触发人工跟进。
 - 回答数据安全、API Key、隐私和权限边界。
 - 跨轮次收集称呼、联系方式、行业和需求。

@@ -69,7 +69,7 @@ function createCustomerServiceAgent({ knowledgePath }) {
             handoffRequired: true,
             lead: { ...state.lead },
             message:
-              `已记录您的需求：${formatLead(state.lead)}。工作人员会根据您留下的联系方式继续沟通，确认场景、资料范围、接入方式和报价。`,
+              `已记录您的需求：${formatLead(state.lead)}。工作人员会根据您留下的联系方式继续沟通，确认服务范围、时间安排、资料或现场情况，并给出最终确认。`,
             sources: topKnowledge(message, knowledge, 2),
           };
         }
@@ -78,17 +78,25 @@ function createCustomerServiceAgent({ knowledgePath }) {
         return {
           type: "lead_capture",
           message:
-            "可以先安排试用或方案沟通。请留下称呼、联系方式、公司/行业、希望智能客服解决的问题，以及方便联系的时间；如果涉及合同、最终报价或售后争议，也会由工作人员继续确认。",
+            "可以先帮您记录需求并安排工作人员跟进。请留下称呼、联系方式、所在城市或服务区域、具体需求，以及方便联系的时间；如果涉及合同、最终报价、退款或售后争议，也会由工作人员继续确认。",
           sources: topKnowledge(message, knowledge, 2),
         };
       }
 
       if (containsAny(lowerMessage, ["多少钱", "收费", "价格", "报价", "费用"])) {
+        const pricingSources = topKnowledge(message, knowledge, 3);
+        const pricingIntro = pricingSources.length
+          ? pricingSources
+              .map((chunk) => summarizeChunk(chunk.content))
+              .filter(Boolean)
+              .slice(0, 2)
+              .join(" ")
+          : "";
         return {
           type: "answer",
           message:
-            "费用通常取决于知识库资料量、需要接入的平台、是否要配置工作流/人工客服转接、部署方式和后续维护范围。我可以说明报价口径，但不能给出最终报价；如果您留下联系方式，工作人员会按场景评估后给出正式方案。",
-          sources: topKnowledge(message, knowledge, 3),
+            `${pricingIntro ? `${pricingIntro} ` : ""}具体费用需要根据实际需求、服务范围、接入方式或现场情况确认。我可以先说明报价口径，但不能直接承诺最终报价；如果您留下联系方式，工作人员会进一步核实后给出确认结果。`,
+          sources: pricingSources,
         };
       }
 
@@ -187,7 +195,7 @@ function extractLeadFields(message) {
   }
   if (industryMatch) {
     lead.need = `${industryMatch[1]}智能客服咨询`;
-  } else if (containsAny(message, ["装修", "教育", "家政", "电商", "软件", "餐饮", "医美", "获客"])) {
+  } else if (containsAny(message, ["装修", "教育", "家政", "保洁", "清洁", "开荒", "电商", "软件", "餐饮", "医美", "获客"])) {
     lead.need = message;
   }
   if (timeMatch) {
